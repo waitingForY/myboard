@@ -1,5 +1,9 @@
 # board
 
+## Display   
+> You can login http://testland.orientsoft.cn:30000 to look at the webset;
+> You must input the true channel such as(pushcolumn_test,pusharea_test,pushpie_test,pushline_NewYork,pushline_London....)
+
 ## Dependencies
 
 > If you're developing under Windows, see docs to setup，and the following steps are for linux.
