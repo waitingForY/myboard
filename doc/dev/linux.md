@@ -21,7 +21,7 @@ If you encounter permission problems, try these command with sudo.
 ## Install
 
 ```
-git clone --recursive https://github.com/MonitorAndBoard/board.git
+git clone --recursive https://github.com/waitingForY/myboard.git
 cd board
 npm install
 ```
