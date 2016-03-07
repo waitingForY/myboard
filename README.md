@@ -3,7 +3,7 @@
 ## Display   
 > You can login http://testland.orientsoft.cn:30000 to look at the webset;
 > You must input the true channel such as(pushcolumn_test,pusharea_test,pushpie_test,pushline_NewYork,pushline_London....)  
-> You may find `some function are not available`,and please be `in patience`,I will realize them quickly！
+> You may find **`some function are not available`**,and please be **`in patience`**,I will realize them quickly！
 
 ## Dependencies
 
