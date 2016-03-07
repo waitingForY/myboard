@@ -33,4 +33,5 @@ npm install
 cd board
 npm start
 ```
-For more development environment: see [Setup on Windows](doc/dev/windows.md) or [Setup on Linux](doc/dev/linux.md)
+For more development environment: see [Setup on Windows](doc/dev/windows.md) or [Setup on Linux](doc/dev/linux.md)     
+For more information of this project :see [doc of this pro](doc/SUMRASE.md)

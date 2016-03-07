@@ -1,27 +1,32 @@
-# Setup on Windows
-## setup express
-
+# Setup on linux
+##dependence
 this step is to set up the basic express, and it will then generate a working directory automatically:
+**`Node`(>= v4.0)** and a global `express` are required.
+
+**It's recommended to use the latest version of npm**, to update npm run:
 
 ```
-express -e filename
+npm i -g -U npm
 ```
 
-and then, install some independencies:
+To install experss:
 
 ```
-cd filename & npm install
+npm i -g express
 ```
 
+If you encounter permission problems, try these command with sudo.
 
 
-## install redis
+## Install
 
-
-you just need to download the redis throungh internet and run the redis-server.exe and redis-cli.exe.
-
+```
+git clone --recursive https://github.com/MonitorAndBoard/board.git
+cd board
+npm install
+```
 ## Start
-*  start redis
-*  start server: node www
-*  input the URL in the browser: localhost:3000, and then enter into the index page
-*  show data: node testPublish.js
+```
+cd board
+npm start
+```
