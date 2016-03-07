@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>数据监控网站</title>
+    <link rel="stylesheet" href="stylesheets/bootstrap.css">
+    <link rel="stylesheet" href="stylesheets/main.css">
+    <link rel="stylesheet" href="stylesheets/jquery.gridster.css">
+    <script src="javascripts/choose.js"></script>
+ 
+    <script src="javascripts/jquery.min.js"></script>
+    <script src="javascripts/bootstrap.min.js"></script>
+    <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+    <script src="javascripts/highcharts.js"></script>
+    <script src="javascripts/jquery.gridster.js"></script>
+    <script src='/socket.io/socket.io.js'></script>
+</head>
+<body onload="clicked1('append','edit1')">
+<!--添加组件的modal-->
+<div id="header">
+    <img id="logo" src="images/logo.jpg">
+    <button id="addcomponent" type="button" class="btn btn-primary" data-toggle="modal" data-target="#component">
+       <span class="glyphicon glyphicon-plus"></span>组件
+    </button>
+    <button id="pause" type="button" class="btn btn-warning">
+       <span class="glyphicon glyphicon-pause"></span>暂停
+    </button>
+    <!--<div class="dropdown">
+        <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
+            下拉菜单
+            <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+            <li><a href="#" role="menuitem">中国气温</a></li>
+            <li><a href="#" role="menuitem">美国气温</a></li>
+            <li><a href="#" role="menuitem">英国气温</a></li>
+        </ul>
+    </div>
+    <script src="javascripts/jquery.min.js"></script>
+    <script src="javascripts/bootstrap.min.js"></script>-->
+    <select id="panel">
+        <option value="china">中国气温</option>
+        <option value="america">美国气温</option>
+        <option value="england">英国气温</option>
+    </select>
+    <select id="account">
+        <option value="accountnum">用户名</option>
+        <option value="panelmanage">管理面板</option>
+        <option value="theme">主题设置</option>
+        <option value="exit">退出</option>
+    </select>
+</div>
+<div id='count'></div>
+<div class="modal" id="component" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="myModalLabel">添加一个插件</h4>
+            </div>
+            <div class="modal-content">
+	            <img id="choosepushcolumn" src="images/pushcolumn.jpg" onclick="choosePushcolumn()" class="img" data-toggle="modal" data-target="#pushcolumn" data-dismiss="modal" aria-label="Close">
+                <img id="choosepushcolumnmulti" src="images/pushcolumnmulti.jpg" onclick="choosePushcolumnmulti()" class="img" data-toggle="modal" data-target="#pushcolumnmulti" data-dismiss="modal" aria-label="Close">
+                <img id="choosepushcolumnlog" src="images/pushcolumnlog.jpg" onclick="choosePushcolumnlog()" class="img" data-toggle="modal" data-target="#pushcolumnlog" data-dismiss="modal" aria-label="Close">
+                <img id="choosepushgauge" src="images/pushgauge.jpg" onclick="choosePushgauge()" class="img" data-toggle="modal" data-target="#pushgauge" data-dismiss="modal" aria-label="Close">
+                <img id="choosepushline" src="images/pushline.jpg" onclick="choosePushline()" class="img" data-toggle="modal" data-target="#pushline" data-dismiss="modal" aria-label="Close">
+                <img id="choosearea" src="images/area.jpg" onclick="chooseArea()" class="img" data-toggle="modal" data-target="#area" data-dismiss="modal" aria-label="Close">
+                <img id="choosebar" src="images/bar.jpg" onclick="chooseBar()" class="img" data-toggle="modal" data-target="#bar" data-dismiss="modal" aria-label="Close">
+                <img id="choosecolumn" src="images/column.jpg" onclick="chooseColumn()" class="img" data-toggle="modal" data-target="#column" data-dismiss="modal" aria-label="Close">
+                <img id="chooseline" src="images/line.jpg" onclick="chooseLine()" class="img" data-toggle="modal" data-target="#line" data-dismiss="modal" aria-label="Close">
+
+            </div>
+        </div>
+    </div>
+</div>
+<!--各个组件的具体的modal-->
+<div class="modal" id="pushcolumn" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="title1">编辑插件</h4>
+            </div>
+            <div class="modal-content">
+                <div id="cho">
+                <div id="append" class="choice" onclick="clicked1('append','edit1')">添加数据</div>
+                <div id="sty" class="choice" onclick="clicked2('sty','edit2')">样式配置</div>
+                <div id="data" class="choice" onclick="clicked3('data','edit3')">数据格式</div>
+                </div>
+                <div id="edit1">
+                    <ul>
+                        <li><label for="placeholder">控件在面板上占位单元格</label></li>
+                        <li>
+                            <select id="placeholder">
+                            <option value="twotwo">两行两列</option>
+                            <option value="twothree">两行三列</option>
+                            <option value="threethree">三行三列</option>
+                            </select>
+                        </li>
+                        <li><label for="msgld">Msgld</label></li>
+                        <li><input id="msgid" type="text" id="msgld" class="input-group"></li>
+                    </ul>
+                    <img id="imgid" src="images/pushcolumn.jpg">
+                </div>
+                <div id="edit2">
+                    <ul id="config">
+                    <li><input id="title" type="text" class="input-group" placeholder="标题"></li>
+                    <li><input id="bTitle" type="text" class="input-group" placeholder="副标题"></li>
+                    <li><input id="xAxis" type="text" class="input-group" placeholder="X轴"></li>
+                    <li><input id="yAxis" type="text" class="input-group" placeholder="Y轴"></li>
+                    </ul>
+                    <ul id="config2">
+                    <li><label for="istag">是否显示标签</label></li>
+                    <li><select id="istag">
+                        <option value="yes">显示</option>
+                        <option value="no">不显示</option>
+                    </select></li>
+                    <li><label for="turntag">标签旋转</label></li>
+                    <li><select id="turntag">
+                        <option value="zero">0度</option>
+                        <option value="ninety">90度</option>
+                        <option value="straight">180度</option>
+                        <option value="circle">360度</option>
+                    </select></li>
+                    </ul>
+                </div>
+                <div id="edit3">
+                    <pre>
+                        {
+                            "VALUE":{
+                                {
+                                    "NAME":"ANDROID",
+                                    "DATA":[
+                                        [
+                                          "3月"，
+                                          413
+                                        ],
+                                       [
+                                          "4月"，
+                                           311
+                                        ],
+                                     ]
+                                }
+                               {
+                                   "NAME":"IOS",
+                                }
+                            }
+                        }
+                    </pre>
+                </div>
+                <div id="save" data-dismiss="modal" aria-label="Close">
+                    保存设置此控件
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--用于显示highchat绘制的表格-->
+<div class="gridster">
+    <ul id="ul"></ul>
+</div>
+<script src="javascripts/main.js"></script>
+<script src="javascripts/chooseChart.js"></script>
+</body>
+</html>

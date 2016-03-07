@@ -1,0 +1,139 @@
+.test{
+    border: 2px solid red;
+}
+body{
+    background-color: #333333;
+}
+#header{
+    height: 50px;
+    border: 1px solid #00B7FF;
+    text-align: center;
+    line-height: 52px;
+}
+#logo{
+    width: 100px;
+    height: 48px;
+    float: left;
+}
+#pause{
+    margin: 3px 500px auto 15px;
+    color: #ffffff;
+    font-size: 20px;
+}
+#addcomponent{
+
+    margin: 3px 15px auto 30px;
+    color: #ffffff;
+    font-size: 20px;
+}
+#panel,
+#account{
+    width: 180px;
+    height: 25px;
+}
+.gridster ul{margin:0;}
+.gridster ul li{list-style-type:none;}
+#edit1,
+#edit2,
+#edit3{
+    position: absolute;
+    top:0px;
+    left: 90px;
+    width: 500px;
+    height: 400px;
+    background-color: #ddd;
+}
+#edit3,
+#edit2,
+#edit1{
+    visibility: hidden;
+}
+#pushcolumn
+.modal-content{
+    height: 480px;
+}
+#pushcolumnmulti
+.modal-content{
+    height: 480px;
+}
+#pushcolumnlog
+.modal-content{
+    height: 480px;
+}
+#pushgauge
+.modal-content{
+    height: 480px;
+}
+#pushline
+.modal-content{
+    height: 480px;
+}
+#area
+.modal-content{
+    height: 480px;
+}
+#bar
+.modal-content{
+    height: 480px;
+}
+#column
+.modal-content{
+    height: 480px;
+}
+#line
+.modal-content{
+    height: 480px;
+}
+#addcomponent,
+#pause,
+#cho,
+#edit2 #config,
+#edit1 ul{
+    float: left;
+}
+.choice{
+    width: 80px;
+    height: 30px;
+    text-align: center;
+    line-height: 30px;
+    margin: 0 0 10px 10px;
+    background-color: #adadad;
+}
+.img{
+    width: 180px;
+    height: 90px;
+    margin: 8px;
+    border: 6px solid #adadad;
+}
+li{
+    list-style-type: none;
+}
+select,input{
+    width: 220px;
+}
+
+#edit1 img{
+    width: 200px;
+    height: 100px;
+    margin: 0 0 0 30px;
+}
+/*#edit3{
+    clear: both;
+    width: 450px;
+    margin-left: 130px;
+}*/
+#save{
+    position: absolute;
+    top:420px;
+    width: 500px;
+    height: 40px;
+    margin-left: 90px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    background-color: #adadad;
+    text-align: center;
+    line-height: 40px;
+}
+#edit2 #config li{
+    margin-bottom: 10px;
+}

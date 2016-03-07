@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link rel="stylesheet" href="stylesheets/bootstrap.css">
+    <link rel="stylesheet" href="stylesheets/main.css">
+</head>
+<body style="background-color: #ffffff">
+    <div id="logContainer">
+        <h1>登录</h1>
+        <form id="logForm">
+            <ul>
+                <li>
+                    <label>用户名</label>
+                    <input type="text" value="请输入用户名" onfocus="if(value=='请输入用户名') {value=''}" onblur="if (value=='') {value='请输入用户名'}">
+                </li>
+                <li>
+                    <label>密码</label>
+                    <input type="text" value="请输入密码" onfocus="if(value=='请输入密码') {value=''}" onblur="if (value=='') {value='请输入密码'}">
+                </li>
+            </ul>
+        </form>
+        <button id="login">登录</button>
+        <a href="regist.html">注册</a>
+    </div>
+</body>
+</html>

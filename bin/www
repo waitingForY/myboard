@@ -1,0 +1,187 @@
+#!/usr/bin/nodejs
+var debug = require('debug')('my-application');
+var app = require('../app');
+var redis=require('redis');
+var client=redis.createClient('6379','127.0.0.1');
+
+app.set('port', process.env.PORT || 3000);
+
+var server = app.listen(app.get('port'), function() {
+  debug('Express server listening on port ' + server.address().port);
+});
+//线性图
+function pushline(){
+    //这里是linechart的初始设置
+    var chart={
+        /*backgroundColor: {
+            linearGradient: { x1: 0, y1: 0, x2: 0, y2: 1 },
+            stops: [ [0, 'rgb(96, 96, 96)'], [1, 'rgb(16, 16, 16)'] ]
+
+        },*/
+        backgroundColor:'#adadad',
+       type:'line'
+    };
+    var yAxis = {
+        plotLines: [{
+            value: 0,
+            width: 1,
+            color: '#808080'
+        }]
+    };
+    var tooltip = {
+        valueSuffix: '\xB0C'
+    };
+
+    var legend = {
+        backgroundColor: '#adadad',
+        layout: 'vertical',
+        align: 'middle',
+        verticalAlign: 'middle',
+        borderWidth: 0
+    };
+    var payload={};
+    payload.chart=chart;
+    payload.yAxis = yAxis;
+    payload.tooltip = tooltip;
+    payload.legend = legend;
+    return payload;
+}
+//柱状图
+function pushcolumn(){
+    var chart= {
+
+            backgroundColor:'#adadad',
+            type:'column'
+        };
+    var yAxis= {
+            allowDecimals: false
+        };
+     var xAxis={
+                    type: 'category'
+                };
+    var legend={
+        backgroundColor:'#adadad'
+    };
+    var tooltip= {
+            formatter: function () {
+                return '<b>' + this.series.name + '</b><br/>' +
+                    this.point.y + ' ' + this.point.name.toLowerCase();
+            }
+        };
+    var payload={};
+    payload.chart=chart;
+    payload.yAxis=yAxis;
+    payload.xAxis=xAxis;
+    payload.legend=legend;
+    payload.tooltip=tooltip;
+    return payload;
+}
+//区域图
+function pusharea(){
+    var chart= {
+        type: 'area',
+        backgroundColor:'#333333'
+    };
+    var xAxis= {
+        allowDecimals: false,
+            labels: {
+            formatter: function () {
+                return this.value; // clean, unformatted number for year
+            }
+        }
+    };
+    var yAxis={
+        title: {
+            text: 'Nuclear weapon states'
+        },
+        labels: {
+            formatter: function () {
+                return this.value / 1000 + 'k';
+            }
+        }
+    };
+    var tooltip= {
+        pointFormat: '{series.name} produced <b>{point.y:,.0f}</b><br/>warheads in {point.x}'
+    };
+    
+    var payload={};
+    payload.chart=chart;
+    payload.yAxis=yAxis;
+    payload.xAxis=xAxis;
+    payload.tooltip=tooltip;
+    return payload;
+}
+//饼状图
+function pushpie(){
+    var chart= {
+        plotBackgroundColor: null,
+            plotBorderWidth: null,
+            plotShadow: false,
+            type: 'pie',
+        backgroundColor:'#333333'
+    };
+    var tooltip= {
+        pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+    };
+    var payload={};
+    payload.chart=chart;
+    payload.tooltip=tooltip;
+    return payload;
+}
+var io=require('socket.io').listen(server);
+io.sockets.on('connection',function(socket){
+//通过socket把前端的信息推送到后台来
+socket.on('chartmsg',function(data){ 
+    var channelName=data.channel;//通道名字
+//一下是从redis数据库推送过来的数据
+    try{
+    var client=redis.createClient('6379','127.0.0.1');
+    client.on('error',function (error) {
+        console.log(error);
+    });
+    client.on('ready',function  (){
+        client.subscribe(channelName);
+    });
+    client.on('message',function  (channel,message) {
+        if(channel.indexOf("pushline")>=0)
+        {
+            var info=JSON.parse(message);
+            var payload=pushline();
+            var serie=[{name:info.name,data:info.data}];
+            var xAxis={categories:info.categories};
+            payload.series=serie;
+            payload.xAxis = xAxis;
+            //将redis推送过来打数据和所有chart的信息封装好后向前端推送
+            socket.emit('pushData',payload); 
+        }
+        if(channel.indexOf("pushcolumn")>=0)
+        {
+            var info=JSON.parse(message);
+            var payload=pushcolumn();
+            var serie=[{name:info.name,data:info.data}];
+            payload.series=serie;
+            socket.emit('pushData',payload);
+        }
+        if(channel.indexOf("pusharea")>=0)
+        {
+            var info=JSON.parse(message);
+            var payload=pusharea();
+            var serie=[{name:info.name,data:info.data}];
+            payload.series=serie;
+            socket.emit('pushData',payload);
+        }
+        if(channel.indexOf("pushpie")>=0)
+        {
+            var info=JSON.parse(message);
+            var payload=pusharea();
+            var serie=[{name:info.name,colorByPoint:info.colorByPoint,data:info.data}];
+            payload.series=serie;
+            socket.emit('pushData',payload);
+        }
+    });
+}
+catch(error){
+    console.log(error);
+}
+});  
+});

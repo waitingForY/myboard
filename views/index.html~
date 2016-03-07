@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>数据监控网站</title>
+    <link rel="stylesheet" href="stylesheets/bootstrap.css">
+    <link rel="stylesheet" href="stylesheets/main.css">
+    <link rel="stylesheet" href="stylesheets/jquery.gridster.css">
+    <script src="javascripts/choose.js"></script>
+    <script src="javascripts/jquery.min.js"></script>
+    <script src="javascripts/bootstrap.min.js"></script>
+    <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+    <script src="javascripts/highcharts.js"></script>
+    <script src="javascripts/jquery.gridster.js"></script>
+	<script src='/socket.io/socket.io.js'></script>
+    <style>
+        .gridster ul{margin:0;}
+        .gridster ul li{list-style-type:none;border:1px solid #f0ad4e;}
+
+    </style>
+</head>
+<script>
+var socket=io.connect('http://localhost:3000');
+socket.on('news',function(data){
+	document.write(data.hello);
+	socket.emit('my other event',{my:'data'});
+});
+</script>
+<body onload="clicked1('append','edit1')">
+<!--添加组件的modal-->
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#component">+组件</button>
+<div id='count'></div>
+<div class="modal" id="component" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="myModalLabel">添加一个插件</h4>
+            </div>
+            <div class="modal-content">
+                <img src="images/pushcolumn.jpg" class="img" data-toggle="modal" data-target="#pushcolumn" data-dismiss="modal" aria-label="Close">
+                <img src="images/pushcolumnmulti.jpg" class="img" data-toggle="modal" data-target="#pushcolumnmulti">
+                <img src="images/pushcolumnlog.jpg" class="img" data-toggle="modal" data-target="#pushcolumnlog">
+                <img src="images/pushgauge.jpg" class="img" data-toggle="modal" data-target="#pushgauge">
+                <img src="images/pushline.jpg" class="img" data-toggle="modal" data-target="#pushline">
+                <img src="images/area.jpg" class="img" data-toggle="modal" data-target="#area">
+                <img src="images/bar.jpg" class="img" data-toggle="modal" data-target="#bar">
+                <img src="images/column.jpg" class="img" data-toggle="modal" data-target="#column">
+                <img src="images/line.jpg" class="img" data-toggle="modal" data-target="#line">
+
+            </div>
+        </div>
+    </div>
+</div>
+<!--各个组件的具体的modal-->
+<div class="modal" id="pushcolumn" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="title1">编辑插件</h4>
+            </div>
+            <div class="modal-content">
+                <div id="cho">
+                <script>
+                    //这三个函数其实可以写成一个函数，前提是this关键字可以用。还有待改进！！
+                    function clicked1(id1,id2){
+                        document.getElementById(id1).style.backgroundColor='#ddd';
+                        document.getElementById('sty').style.backgroundColor='#adadad';
+                        document.getElementById('data').style.backgroundColor='#adadad';
+                        document.getElementById(id2).style.visibility='visible';
+                        document.getElementById('edit2').style.visibility='hidden';
+                        document.getElementById('edit3').style.visibility='hidden';
+                    }
+                    function clicked2(id1,id2){
+                        document.getElementById(id1).style.backgroundColor='#ddd';
+                        document.getElementById('append').style.backgroundColor='#adadad';
+                        document.getElementById('data').style.backgroundColor='#adadad';
+                        document.getElementById(id2).style.visibility='visible';
+                        document.getElementById('edit1').style.visibility='hidden';
+                        document.getElementById('edit3').style.visibility='hidden';
+                    }
+                    function clicked3(id1,id2){
+                        document.getElementById(id1).style.backgroundColor='#ddd';
+                        document.getElementById('sty').style.backgroundColor='#adadad';
+                        document.getElementById('append').style.backgroundColor='#adadad';
+                        document.getElementById(id2).style.visibility='visible';
+                        document.getElementById('edit2').style.visibility='hidden';
+                        document.getElementById('edit1').style.visibility='hidden';
+}
+                </script>
+                <div id="append" class="choice" onclick="clicked1('append','edit1')">添加数据</div>
+                <div id="sty" class="choice" onclick="clicked2('sty','edit2')">样式配置</div>
+                <div id="data" class="choice" onclick="clicked3('data','edit3')">数据格式</div>
+
+                </div>
+
+                <div id="edit1">
+                    <ul>
+                        <li><label for="placeholder">控件在面板上占位单元格</label></li>
+                        <li>
+                            <select id="placeholder">
+                            <option value="twotwo">两行两列</option>
+                            <option value="twothree">两行三列</option>
+                            <option value="threethree">三行三列</option>
+                            </select>
+                        </li>
+                        <li><label for="msgld">Msgld</label></li>
+                        <li><input type="text" id="msgld" class="input-group"></li>
+                    </ul>
+                    <img src="img/highchart/pushcolumn.jpg">
+                </div>
+                <div id="edit2">
+                    <ul id="config">
+                    <li><input type="text" class="input-group" placeholder="标题"></li>
+                    <li><input type="text" class="input-group" placeholder="副标题"></li>
+                    <li><input type="text" class="input-group" placeholder="X轴"></li>
+                    <li><input type="text" class="input-group" placeholder="Y轴"></li>
+                    </ul>
+                    <ul id="config2">
+                    <li><label for="istag">是否显示标签</label></li>
+                    <li><select id="istag">
+                        <option value="yes">显示</option>
+                        <option value="no">不显示</option>
+                    </select></li>
+                    <li><label for="turntag">标签旋转</label></li>
+                    <li><select id="turntag">
+                        <option value="zero">0度</option>
+                        <option value="ninety">90度</option>
+                        <option value="straight">180度</option>
+                        <option value="circle">360度</option>
+                    </select></li>
+                    </ul>
+                </div>
+                <div id="edit3">
+                    <pre>
+                        {
+                            "VALUE":{
+                                {
+                                    "NAME":"ANDROID",
+                                    "DATA":[
+                                        [
+                                          "3月"，
+                                          413
+                                        ],
+                                       [
+                                          "4月"，
+                                           311
+                                        ],
+                                     ]
+                                }
+                               {
+                                   "NAME":"IOS",
+                                }
+                            }
+                        }
+                    </pre>
+                </div>
+
+
+                <div id="save" data-dismiss="modal" aria-label="Close">
+                    保存设置此控件
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--用于显示highchat绘制的表格-->
+<div class="gridster">
+    <ul id="ul"></ul>
+</div>
+<script>
+
+    var gridster;
+    $(function(){
+        gridster = $(".gridster ul").gridster({    //通过jquery选择DOM实现gridster
+            widget_base_dimensions: [100, 120],    //模块的宽高 [宽,高]
+            widget_margins: [5, 5],    //模块的间距 [上下,左右]
+//            draggable: {
+//                handle: '.con'    //模块内定义拖动的元素<header>，这里也支持jquery选择器，如"span.drag_handle"
+//            }
+            draggable:{
+                start: function(event, ui){
+
+                    console.log("start");
+                },
+                drag:function(event, ui){
+                    console.log("drag");
+                },
+                stop: function(event, ui){
+                    console.log("stop");
+                }
+            }
+        }).data('gridster');
+    });
+    $("#save").click(function () {
+    var title={
+        text:'月平均气温'
+    };
+    var xAxis={
+        categories: ['一月', '二月', '三月', '四月', '五月', '六月'
+            ,'七月', '八月', '九月', '十月', '十一月', '十二月']
+    };
+    var yAxis = {
+        title: {
+            text: 'Temperature (\xB0C)'
+        },
+        plotLines: [{
+            value: 0,
+            width: 1,
+            color: '#808080'
+        }]
+    };
+
+    var tooltip = {
+        valueSuffix: '\xB0C'
+    }
+
+    var legend = {
+        layout: 'vertical',
+        align: 'right',
+        verticalAlign: 'middle',
+        borderWidth: 0
+    };
+
+    var series =  [
+        {
+            name: 'Tokyo',
+            data: [7.0, 6.9, 9.5, 14.5, 18.2, 21.5, 25.2,
+                26.5, 23.3, 18.3, 13.9, 9.6]
+        },
+        {
+            name: 'New York',
+            data: [-0.2, 0.8, 5.7, 11.3, 17.0, 22.0, 24.8,
+                24.1, 20.1, 14.1, 8.6, 2.5]
+        },
+        {
+            name: 'Berlin',
+            data: [-0.9, 0.6, 3.5, 8.4, 13.5, 17.0, 18.6,
+                17.9, 14.3, 9.0, 3.9, 1.0]
+        },
+        {
+            name: 'London',
+            data: [3.9, 4.2, 5.7, 8.5, 11.9, 15.2, 17.0,
+                16.6, 14.2, 10.3, 6.6, 4.8]
+        }
+    ];
+    var json={};
+    json.title=title;
+    json.xAxis = xAxis;
+    json.yAxis = yAxis;
+    json.tooltip = tooltip;
+    json.legend = legend;
+    json.series = series;
+    var li=gridster.add_widget('<li class="con">The HTML of the widget...</li>', 4, 2);
+    $(li).highcharts(json);
+
+     });
+</script>
+
+
+<script>
+    $("#pushcolumn").draggable();
+    $("#component").draggable();
+</script>
+</body>
+</html>
