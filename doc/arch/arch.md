@@ -1,4 +1,4 @@
 # This is myboard architecture    
-> If you want to learn more abort my board you can see [doc](doc/SUMAZE.md)    
+> If you want to learn more abort my board you can see [doc](doc/SUMRASE.md)    
 
-![architecture](pic/architecture.png)
+![architecture](doc/pic/architecture.png)
