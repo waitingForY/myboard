@@ -1,4 +1,4 @@
-# board
+# myBoard
 
 ## Display   
 > You can login http://testland.orientsoft.cn:30000 to look at the webset;
