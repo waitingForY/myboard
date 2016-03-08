@@ -16,7 +16,7 @@
 9 verbose stack     at maybeClose (child_process.js:638:16)
 9 verbose stack     at Process._handle.onexit (child_process.js:680:5)
 10 verbose pkgid application-name@0.0.1
-11 verbose cwd /home/wjb/github/board
+11 verbose cwd /home/wjb/github/myboard
 12 error Linux 4.2.0-22-generic
 13 error argv "node" "/usr/local/bin/npm" "start"
 14 error node v0.8.16

@@ -9,59 +9,60 @@ app.set('port', process.env.PORT || 3000);
 var server = app.listen(app.get('port'), function() {
   debug('Express server listening on port ' + server.address().port);
 });
+var sty={
+    color:'#ffffff',
+    fontSize:'15'
+};
 //线性图
 function pushline(){
-    //这里是linechart的初始设置
     var chart={
-        /*backgroundColor: {
-            linearGradient: { x1: 0, y1: 0, x2: 0, y2: 1 },
-            stops: [ [0, 'rgb(96, 96, 96)'], [1, 'rgb(16, 16, 16)'] ]
-
-        },*/
-        backgroundColor:'#adadad',
-       type:'line'
+        backgroundColor:'#333333',
+        type:'line'
     };
     var yAxis = {
         plotLines: [{
             value: 0,
             width: 1,
             color: '#808080'
-        }]
+        }],
+        style:sty
     };
     var tooltip = {
         valueSuffix: '\xB0C'
     };
 
-    var legend = {
-        backgroundColor: '#adadad',
-        layout: 'vertical',
-        align: 'middle',
-        verticalAlign: 'middle',
-        borderWidth: 0
-    };
+    //var legend = {
+    //    backgroundColor: '#333333',
+    //    layout: 'vertical',
+    //    align: 'middle',
+    //    verticalAlign: 'middle',
+    //    borderWidth: 0
+    //};
     var payload={};
     payload.chart=chart;
     payload.yAxis = yAxis;
     payload.tooltip = tooltip;
-    payload.legend = legend;
+    //payload.legend = legend;
     return payload;
 }
 //柱状图
 function pushcolumn(){
     var chart= {
 
-            backgroundColor:'#adadad',
+            backgroundColor:'#333333',
             type:'column'
         };
     var yAxis= {
-            allowDecimals: false
+        allowDecimals: false,
+        style:sty
         };
      var xAxis={
-                    type: 'category'
-                };
-    var legend={
-        backgroundColor:'#adadad'
-    };
+         type: 'category',
+         style:sty
+     };
+    //var legend={
+    //    backgroundColor:'#333333'
+    //};
     var tooltip= {
             formatter: function () {
                 return '<b>' + this.series.name + '</b><br/>' +
@@ -72,7 +73,7 @@ function pushcolumn(){
     payload.chart=chart;
     payload.yAxis=yAxis;
     payload.xAxis=xAxis;
-    payload.legend=legend;
+    //payload.legend=legend;
     payload.tooltip=tooltip;
     return payload;
 }
