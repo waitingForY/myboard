@@ -66,7 +66,7 @@ var London={
                 ['Shenzhen', 10.5],
                 ['Seoul', 10.4]
             ]
- }
+ };
 var pusharea={
         name: 'USA',
         data: [null, null, null, null, null, 6, 11, 32, 110, 235, 369, 640,
@@ -76,8 +76,8 @@ var pusharea={
             24304, 23464, 23708, 24099, 24357, 24237, 24401, 24344, 23586,
             22380, 21004, 17287, 14747, 13076, 12555, 12144, 11009, 10950,
             10871, 10824, 10577, 10527, 10475, 10421, 10358, 10295, 10104]
-}
-var pushpie={
+};
+var pushhash={
         name: 'Brands',
         colorByPoint: true,
         data: [{
@@ -101,7 +101,25 @@ var pushpie={
             name: 'Proprietary or Undetectable',
             y: 0.2
         }]
-}
+};
+var pushpie={
+    type: 'pie',
+    name: 'Browser share',
+    data: [
+        ['Firefox', 45.0],
+        ['IE', 26.8],
+        {
+            name: 'Chrome',
+            y: 12.8,
+            sliced: true,
+            selected: true
+        },
+        ['Safari', 8.5],
+        ['Opera', 6.2],
+        ['Others', 0.7]
+    ]
+};
+
 client.on('ready',function  (error) {
 	if (error) {
 		console.log(error);
@@ -112,6 +130,7 @@ client.on('ready',function  (error) {
 			client.publish('pushline_London',JSON.stringify(London));
 			client.publish('pushcolumn_test',JSON.stringify(pushcolum));
 			client.publish('pusharea_test',JSON.stringify(pusharea));
+			client.publish('pushhash_test',JSON.stringify(pushhash));
 			client.publish('pushpie_test',JSON.stringify(pushpie));
 		},2000);
 //		setTimeout(function  () {

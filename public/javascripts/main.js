@@ -57,8 +57,10 @@ var gridster;
          var payload=data;
         //payload.className='chart';
          payload.title=title;
-         payload.yAxis.title=yAxis;
-
+        if(payload.yAxis)
+        {
+            payload.yAxis.title=yAxis;
+        }
         //payload.className='test';
         //var chart=li.highcharts(payload);
         $(div).highcharts(payload);

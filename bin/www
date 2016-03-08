@@ -116,6 +116,34 @@ function pusharea(){
 function pushpie(){
     var chart= {
         plotBackgroundColor: null,
+        plotBorderWidth: null,
+        plotShadow: false
+    };
+    var tooltip= {
+        pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+    };
+    var plotOptions= {
+        pie: {
+            allowPointSelect: true,
+            cursor: 'pointer',
+            dataLabels: {
+                enabled: true,
+                color: '#000000',
+                connectorColor: '#000000',
+                format: '<b>{point.name}</b>: {point.percentage:.1f} %'
+            }
+        }
+    };
+    var payload={};
+    payload.chart=chart;
+    payload.tooltip=tooltip;
+    payload.plotOptions=plotOptions;
+    return payload;
+}
+//散列图
+function pushhash(){
+    var chart= {
+        plotBackgroundColor: null,
             plotBorderWidth: null,
             plotShadow: false,
             type: 'pie',
@@ -171,14 +199,23 @@ socket.on('chartmsg',function(data){
             payload.series=serie;
             socket.emit('pushData',payload);
         }
-        if(channel.indexOf("pushpie")>=0)
+        if(channel.indexOf("pushhash")>=0)
         {
             var info=JSON.parse(message);
-            var payload=pusharea();
+            var payload=pushhash();
             var serie=[{name:info.name,colorByPoint:info.colorByPoint,data:info.data}];
             payload.series=serie;
             socket.emit('pushData',payload);
         }
+        if(channel.indexOf("pushpie")>=0)
+        {
+            var info=JSON.parse(message);
+            var payload=pushpie();
+            var serie=[{type:info.type,name:info.name,data:info.data}];
+            payload.series=serie;
+            socket.emit('pushData',payload);
+        }
+
     });
 }
 catch(error){
