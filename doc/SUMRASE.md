@@ -1,8 +1,8 @@
 # 目录
 
 * [系统架构](arch/arch.md)
-* [开发](dev/index.md)
-  * [搭建开发环境](dev/setup.md)
+* [开发](dev/build.md)
+  * [搭建开发环境](dev/env.md)
     * [linux下环境搭建](dev/linux.md)
     * [windows下环境搭建](dev/windows.md)
   * [组件开发](dev/component-dev.md)
