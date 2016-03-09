@@ -85,7 +85,7 @@ function pusharea(){
         //},
         labels: {
             formatter: function () {
-                return this.value / 1000 + 'k';
+                return tplotOptionshis.value / 1000 + 'k';
             }
         }
     };
@@ -136,11 +136,11 @@ function pushhash(){
         plotBackgroundColor: null,
             plotBorderWidth: null,
             plotShadow: false,
-            type: 'pie',
+            //type: 'pie',
         backgroundColor:'#333333'
     };
     var tooltip= {
-        pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+        pointFormat: '{series.name}: <b>{point.y:.1f}%</b>'
     };
     var payload={};
     payload.chart=chart;
