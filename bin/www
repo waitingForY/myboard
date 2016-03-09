@@ -3,9 +3,7 @@ var debug = require('debug')('my-application');
 var app = require('../app');
 var redis=require('redis');
 var client=redis.createClient('6379','127.0.0.1');
-
 app.set('port', process.env.PORT || 3000);
-
 var server = app.listen(app.get('port'), function() {
   debug('Express server listening on port ' + server.address().port);
 });
@@ -34,13 +32,11 @@ function pushline(){
     payload.chart=chart;
     payload.yAxis = yAxis;
     payload.tooltip = tooltip;
-    //payload.legend = legend;
     return payload;
 }
 //柱状图
 function pushcolumn(){
     var chart= {
-
             backgroundColor:'#333333',
             type:'column'
         };
@@ -80,9 +76,6 @@ function pusharea(){
         }
     };
     var yAxis={
-        //title: {
-          //  text: 'Nuclear weapon states'
-        //},
         labels: {
             formatter: function () {
                 return tplotOptionshis.value / 1000 + 'k';
@@ -92,7 +85,6 @@ function pusharea(){
     var tooltip= {
         pointFormat: '{series.name} produced <b>{point.y:,.0f}</b><br/>warheads in {point.x}'
     };
-    
     var payload={};
     payload.chart=chart;
     payload.yAxis=yAxis;

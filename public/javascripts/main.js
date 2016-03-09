@@ -47,23 +47,15 @@ var gridster;
         var socket=io.connect('http://localhost:3000');
 
     var msg={};
-    //msg.title=title;
-    //msg.yAxis=yAxis;
     msg.channel=channel;
-    //msg.xAxis=xAxis;
     socket.emit('chartmsg',msg);
     socket.on('pushData',function (data) {
-        //console.log(JSON.stringify(data));
          var payload=data;
-        //payload.className='chart';
          payload.title=title;
         if(payload.yAxis)
         {
             payload.yAxis.title=yAxis;
         }
-        //payload.className='test';
-        //var chart=li.highcharts(payload);
         $(div).highcharts(payload);
-
     });
 });
