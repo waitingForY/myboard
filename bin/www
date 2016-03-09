@@ -30,14 +30,6 @@ function pushline(){
     var tooltip = {
         valueSuffix: '\xB0C'
     };
-
-    //var legend = {
-    //    backgroundColor: '#333333',
-    //    layout: 'vertical',
-    //    align: 'middle',
-    //    verticalAlign: 'middle',
-    //    borderWidth: 0
-    //};
     var payload={};
     payload.chart=chart;
     payload.yAxis = yAxis;
@@ -60,9 +52,6 @@ function pushcolumn(){
          type: 'category',
          style:sty
      };
-    //var legend={
-    //    backgroundColor:'#333333'
-    //};
     var tooltip= {
             formatter: function () {
                 return '<b>' + this.series.name + '</b><br/>' +
@@ -73,7 +62,6 @@ function pushcolumn(){
     payload.chart=chart;
     payload.yAxis=yAxis;
     payload.xAxis=xAxis;
-    //payload.legend=legend;
     payload.tooltip=tooltip;
     return payload;
 }
@@ -92,9 +80,9 @@ function pusharea(){
         }
     };
     var yAxis={
-        title: {
-            text: 'Nuclear weapon states'
-        },
+        //title: {
+          //  text: 'Nuclear weapon states'
+        //},
         labels: {
             formatter: function () {
                 return this.value / 1000 + 'k';
@@ -115,6 +103,8 @@ function pusharea(){
 //饼状图
 function pushpie(){
     var chart= {
+        type: 'pie',
+        backgroundColor:'#333333',
         plotBackgroundColor: null,
         plotBorderWidth: null,
         plotShadow: false
@@ -128,8 +118,8 @@ function pushpie(){
             cursor: 'pointer',
             dataLabels: {
                 enabled: true,
-                color: '#000000',
-                connectorColor: '#000000',
+                color: '#ffffff',
+                connectorColor: '#ffffff',
                 format: '<b>{point.name}</b>: {point.percentage:.1f} %'
             }
         }

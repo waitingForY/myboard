@@ -103,7 +103,7 @@ var pushhash={
         }]
 };
 var pushpie={
-    type: 'pie',
+    // type: 'pie',
     name: 'Browser share',
     data: [
         ['Firefox', 45.0],
