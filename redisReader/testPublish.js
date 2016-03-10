@@ -66,6 +66,11 @@ var pushpie={
         ['Others', 0.7]
     ]
 };
+var pushbar={
+    categories: ['Africa', 'America', 'Asia', 'Europe', 'Oceania'],
+    series: [{ name: 'Year 1800', data: [107, 31, 635, 203, 2] }, { name: 'Year 1900', data: [133, 156, 947, 408, 6] }, { name: 'Year 2008', data: [973, 914, 4054, 732, 34] }]
+}
+
 
 client.on('ready',function  (error) {
 	if (error) {
@@ -76,6 +81,8 @@ client.on('ready',function  (error) {
 			client.publish('pushcolumn_test',JSON.stringify(pushcolum));
 			client.publish('pusharea_test',JSON.stringify(pusharea));
 			client.publish('pushpie_test',JSON.stringify(pushpie));
+                                       client.publish('pushbar_test',JSON.stringify(pushbar));
+
 		},2000);
 //		setTimeout(function  () {
 //			clearInterval(interval);

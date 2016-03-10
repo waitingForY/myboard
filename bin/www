@@ -119,6 +119,13 @@ function pushpie(){
     payload.plotOptions=plotOptions;
     return payload;
 }
+
+//pushbar
+function pushbar(){
+    var payload=theme;
+    payload.chart.type="bar";
+    return payload;
+}
 var io=require('socket.io').listen(server);
 io.sockets.on('connection',function(socket){
 //通过socket把前端的信息推送到后台来
@@ -171,7 +178,14 @@ socket.on('chartmsg',function(data){
             payload.series=serie;
             socket.emit('pushData',payload);
         }
-
+        if(channel.indexOf("pushbar")>=0)
+        {
+            var info=JSON.parse(message);
+            var payload=pushbar();
+            payload.series=info.series;
+            payload.xAxis.categories=info.categories;
+            socket.emit('pushData',payload);
+        }
     });
 }
 catch(error){
