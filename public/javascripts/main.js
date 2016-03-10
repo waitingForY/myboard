@@ -28,13 +28,9 @@ var gridster;
         }).data('gridster');
     });
     $("#save").click(function () {
-        var sty={
-            color:'#ffffff',
-            fontSize:'15'
-        };
-        var title={text:document.getElementById("title").value,style:sty};
-        var xAxis=document.getElementById('xAxis').value;
-        var yAxis={text:document.getElementById('yAxis').value};
+        var title_text=document.getElementById("title").value;
+        var xAxis_text=document.getElementById('xAxis').value;
+        var yAxis_text=document.getElementById('yAxis').value;
         var channel=document.getElementById('msgid').value;
         var li=gridster.add_widget('<li class="con"></li>', 4, 2);
         var div=$('<div></div>', {
@@ -42,7 +38,7 @@ var gridster;
             margin:10+"px",
             width:"100%",
             height:"100%",
-            background:"#adadad"
+            background:"#ffffff"
         }).appendTo($(li));
         var socket=io.connect('http://localhost:3000');
 
@@ -51,10 +47,10 @@ var gridster;
     socket.emit('chartmsg',msg);
     socket.on('pushData',function (data) {
          var payload=data;
-         payload.title=title;
+         payload.title.text=title_text;
         if(payload.yAxis)
         {
-            payload.yAxis.title=yAxis;
+            payload.yAxis.title.text=yAxis_text;
         }
         $(div).highcharts(payload);
     });

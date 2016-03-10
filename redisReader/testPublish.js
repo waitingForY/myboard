@@ -41,56 +41,14 @@ var pushline={
 	categories:['一月', '二月', '三月', '四月', '五月', '六月' ,'七月', '八月', '九月', '十月', '十一月', '十二月']
 	};
  var pushcolum={
- 	name: 'Population',
-             data: [
-                ['Shanghai', 23.7],
-                ['Lagos', 16.1],
-                ['Instanbul', 14.2],
-                ['Karachi', 14.0],
-                ['Mumbai', 12.5],
-                ['Moscow', 12.1],
-                ['São Paulo', 11.8],
-                ['Beijing', 11.7],
-                ['Guangzhou', 11.1],
-                ['Delhi', 11.1],
-                ['Shenzhen', 10.5],
-                ['Seoul', 10.4]
-            ]
+    categories: [ 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec' ],
+    name: 'Population',
+    data:[49.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, 95.6, 54.4]
  };
 var pusharea={
+        categories: [ 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday' ],
         name: 'USA',
-        data: [null, null, null, null, null, 6, 11, 32, 110, 235, 369, 640,
-            1005, 1436, 2063, 3057, 4618, 6444, 9822, 15468, 20434, 24126,
-            27387, 29459, 31056, 31982, 32040, 31233, 29224, 27342, 26662,
-            26956, 27912, 28999, 28965, 27826, 25579, 25722, 24826, 24605,
-            24304, 23464, 23708, 24099, 24357, 24237, 24401, 24344, 23586,
-            22380, 21004, 17287, 14747, 13076, 12555, 12144, 11009, 10950,
-            10871, 10824, 10577, 10527, 10475, 10421, 10358, 10295, 10104]
-};
-var pushhash={
-        name: 'Brands',
-        colorByPoint: true,
-        data: [{
-            name: 'Microsoft Internet Explorer',
-            y: 56.33
-        }, {
-            name: 'Chrome',
-            y: 24.03,
-            sliced: true,
-            selected: true
-        }, {
-            name: 'Firefox',
-            y: 10.38
-        }, {
-            name: 'Safari',
-            y: 4.77
-        }, {
-            name: 'Opera',
-            y: 0.91
-        }, {
-            name: 'Proprietary or Undetectable',
-            y: 0.2
-        }]
+        data: [3, 4, 3, 5, 4, 10, 12]
 };
 var pushpie={
     name: 'Browser share',
@@ -117,7 +75,6 @@ client.on('ready',function  (error) {
 			client.publish('pushline_test',JSON.stringify(pushline));
 			client.publish('pushcolumn_test',JSON.stringify(pushcolum));
 			client.publish('pusharea_test',JSON.stringify(pusharea));
-			client.publish('pushhash_test',JSON.stringify(pushhash));
 			client.publish('pushpie_test',JSON.stringify(pushpie));
 		},2000);
 //		setTimeout(function  () {

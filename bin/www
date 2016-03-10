@@ -11,96 +11,92 @@ var sty={
     color:'#ffffff',
     fontSize:'15'
 };
+
+var theme={
+     //colors: ["#DDDF0D", "#7798BF", "#55BF3B", "#DF5353", "#aaeeee", "#ff0066", "#eeaaee", "#55BF3B", "#DF5353", "#7798BF", "#aaeeee"],
+     chart: { 
+        backgroundColor: { 
+            linearGradient: { x1: 0, y1: 0, x2: 0, y2: 1 }, 
+            stops: [ [0, 'rgb(96, 96, 96)'], [1, 'rgb(16, 16, 16)'] ] 
+        }, 
+        borderWidth: 0, 
+        borderRadius: 0, 
+        plotBackgroundColor: null, 
+        plotShadow: false, 
+        plotBorderWidth: 0 
+    },
+     title: { 
+        style: { 
+            color: '#FFF', 
+            font: '16px Lucida Grande, Lucida Sans Unicode, Verdana, Arial, Helvetica, sans-serif' 
+        } 
+    },
+    xAxis: { 
+        labels: { 
+            style: { 
+                color: '#999', 
+                fontWeight: 'bold' 
+            } 
+        }, 
+        title: { 
+            style: { 
+                color: '#AAA', 
+                font: 'bold 12px Lucida Grande, Lucida Sans Unicode, Verdana, Arial, Helvetica, sans-serif' 
+            } 
+        } 
+    }, 
+    yAxis: { 
+        alternateGridColor: null, 
+        minorTickInterval: null, 
+        gridLineColor: 'rgba(255, 255, 255, .1)', 
+        minorGridLineColor: 'rgba(255,255,255,0.07)', 
+        lineWidth: 0, tickWidth: 0, 
+        labels: { 
+            style: { 
+                color: '#999', 
+                fontWeight: 'bold' 
+            } 
+        }, 
+        title: { 
+            style: { 
+                color: '#AAA', 
+                font: 'bold 12px Lucida Grande, Lucida Sans Unicode, Verdana, Arial, Helvetica, sans-serif' 
+            } 
+        } 
+    },
+    tooltip: { 
+        backgroundColor: { 
+            linearGradient: { x1: 0, y1: 0, x2: 0, y2: 1 }, 
+            stops: [ [0, 'rgba(96, 96, 96, .8)'], [1, 'rgba(16, 16, 16, .8)'] ] 
+        }, 
+        borderWidth: 0, 
+        style: { 
+            color: '#FFF' 
+        } 
+    }
+}
+
 //线性图
 function pushline(){
-    var chart={
-        backgroundColor:'#333333',
-        type:'line'
-    };
-    var yAxis = {
-        plotLines: [{
-            value: 0,
-            width: 1,
-            color: '#808080'
-        }],
-        style:sty
-    };
-    var tooltip = {
-        valueSuffix: '\xB0C'
-    };
-    var payload={};
-    payload.chart=chart;
-    payload.yAxis = yAxis;
-    payload.tooltip = tooltip;
+    var payload=theme;
+    payload.chart.type="line";
     return payload;
 }
 //柱状图
 function pushcolumn(){
-    var chart= {
-            backgroundColor:'#333333',
-            type:'column'
-        };
-    var yAxis= {
-        allowDecimals: false,
-        style:sty
-        };
-     var xAxis={
-         type: 'category',
-         style:sty
-     };
-    var tooltip= {
-            formatter: function () {
-                return '<b>' + this.series.name + '</b><br/>' +
-                    this.point.y + ' ' + this.point.name.toLowerCase();
-            }
-        };
-    var payload={};
-    payload.chart=chart;
-    payload.yAxis=yAxis;
-    payload.xAxis=xAxis;
-    payload.tooltip=tooltip;
+    var payload=theme;
+    payload.chart.type="column";
     return payload;
 }
 //区域图
 function pusharea(){
-    var chart= {
-        type: 'area',
-        backgroundColor:'#333333'
-    };
-    var xAxis= {
-        allowDecimals: false,
-            labels: {
-            formatter: function () {
-                return this.value; // clean, unformatted number for year
-            }
-        }
-    };
-    var yAxis={
-        labels: {
-            formatter: function () {
-                return tplotOptionshis.value / 1000 + 'k';
-            }
-        }
-    };
-    var tooltip= {
-        pointFormat: '{series.name} produced <b>{point.y:,.0f}</b><br/>warheads in {point.x}'
-    };
-    var payload={};
-    payload.chart=chart;
-    payload.yAxis=yAxis;
-    payload.xAxis=xAxis;
-    payload.tooltip=tooltip;
+    var payload=theme;
+    payload.chart.type="areaspline";
     return payload;
 }
 //饼状图
 function pushpie(){
-    var chart= {
-        type: 'pie',
-        backgroundColor:'#333333',
-        plotBackgroundColor: null,
-        plotBorderWidth: null,
-        plotShadow: false
-    };
+    var payload={};
     var tooltip= {
         pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
     };
@@ -110,33 +106,17 @@ function pushpie(){
             cursor: 'pointer',
             dataLabels: {
                 enabled: true,
-                color: '#ffffff',
-                connectorColor: '#ffffff',
+                color: '#FFF',
+                connectorColor: '#FFF',
                 format: '<b>{point.name}</b>: {point.percentage:.1f} %'
             }
         }
     };
-    var payload={};
-    payload.chart=chart;
+    payload.chart=theme.chart;
+    payload.chart.type="pie";
+    payload.title=theme.title;
     payload.tooltip=tooltip;
     payload.plotOptions=plotOptions;
-    return payload;
-}
-//散列图
-function pushhash(){
-    var chart= {
-        plotBackgroundColor: null,
-            plotBorderWidth: null,
-            plotShadow: false,
-            //type: 'pie',
-        backgroundColor:'#333333'
-    };
-    var tooltip= {
-        pointFormat: '{series.name}: <b>{point.y:.1f}%</b>'
-    };
-    var payload={};
-    payload.chart=chart;
-    payload.tooltip=tooltip;
     return payload;
 }
 var io=require('socket.io').listen(server);
@@ -159,9 +139,9 @@ socket.on('chartmsg',function(data){
             var info=JSON.parse(message);
             var payload=pushline();
             var serie=[{name:info.name,data:info.data}];
-            var xAxis={categories:info.categories};
+            //var xAxis={categories:info.categories};
             payload.series=serie;
-            payload.xAxis = xAxis;
+            payload.xAxis.categories= info.categories;
             //将redis推送过来打数据和所有chart的信息封装好后向前端推送
             socket.emit('pushData',payload); 
         }
@@ -171,6 +151,7 @@ socket.on('chartmsg',function(data){
             var payload=pushcolumn();
             var serie=[{name:info.name,data:info.data}];
             payload.series=serie;
+            payload.xAxis.categories= info.categories;
             socket.emit('pushData',payload);
         }
         if(channel.indexOf("pusharea")>=0)
@@ -179,21 +160,14 @@ socket.on('chartmsg',function(data){
             var payload=pusharea();
             var serie=[{name:info.name,data:info.data}];
             payload.series=serie;
-            socket.emit('pushData',payload);
-        }
-        if(channel.indexOf("pushhash")>=0)
-        {
-            var info=JSON.parse(message);
-            var payload=pushhash();
-            var serie=[{name:info.name,colorByPoint:info.colorByPoint,data:info.data}];
-            payload.series=serie;
+            payload.xAxis.categories= info.categories;
             socket.emit('pushData',payload);
         }
         if(channel.indexOf("pushpie")>=0)
         {
             var info=JSON.parse(message);
             var payload=pushpie();
-            var serie=[{type:info.type,name:info.name,data:info.data}];
+            var serie=[info];
             payload.series=serie;
             socket.emit('pushData',payload);
         }
