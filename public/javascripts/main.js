@@ -41,7 +41,6 @@ var gridster;
             background:"#ffffff"
         }).appendTo($(li));
         var socket=io.connect('http://localhost:3000');
-
     var msg={};
     msg.channel=channel;
     socket.emit('chartmsg',msg);
@@ -52,6 +51,7 @@ var gridster;
         {
             payload.yAxis.title.text=yAxis_text;
         }
+        console.log(payload);
         $(div).highcharts(payload);
     });
 });

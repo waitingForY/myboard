@@ -23,7 +23,14 @@ var theme={
         borderRadius: 0, 
         plotBackgroundColor: null, 
         plotShadow: false, 
-        plotBorderWidth: 0 
+        plotBorderWidth: 0,
+        options3d:{
+            enabled: false,
+            alpha: 10,
+            beta: 25,
+            depth: 70
+        }
+        
     },
      title: { 
         style: { 
@@ -74,24 +81,28 @@ var theme={
             color: '#FFF' 
         } 
     }
-}
+};
 
 //线性图
 function pushline(){
     var payload=theme;
     payload.chart.type="line";
+    payload.chart.options3d.enabled=false;
     return payload;
 }
 //柱状图
 function pushcolumn(){
     var payload=theme;
     payload.chart.type="column";
+    payload.chart.options3d.enabled=false;
+    //console.log(payload);
     return payload;
 }
 //区域图
 function pusharea(){
     var payload=theme;
     payload.chart.type="areaspline";
+    payload.chart.options3d.enabled=false;
     return payload;
 }
 //饼状图
@@ -114,9 +125,11 @@ function pushpie(){
     };
     payload.chart=theme.chart;
     payload.chart.type="pie";
+    payload.chart.options3d.enabled=false;
     payload.title=theme.title;
     payload.tooltip=tooltip;
     payload.plotOptions=plotOptions;
+    
     return payload;
 }
 
@@ -124,8 +137,24 @@ function pushpie(){
 function pushbar(){
     var payload=theme;
     payload.chart.type="bar";
+    payload.chart.options3d.enabled=false;
     return payload;
 }
+
+function push3d()
+{
+    var payload={};
+    payload.chart=theme.chart;
+    //console.log(theme);
+    payload.chart.options3d.enabled=true;
+    payload.chart.type="column";
+    payload.title=theme.title;
+    payload.xAxis=theme.xAxis;
+    payload.yAxis=theme.yAxis;
+    return payload;
+}
+
+
 var io=require('socket.io').listen(server);
 io.sockets.on('connection',function(socket){
 //通过socket把前端的信息推送到后台来
@@ -159,6 +188,7 @@ socket.on('chartmsg',function(data){
             var serie=[{name:info.name,data:info.data}];
             payload.series=serie;
             payload.xAxis.categories= info.categories;
+            //console.log(payload);
             socket.emit('pushData',payload);
         }
         if(channel.indexOf("pusharea")>=0)
@@ -183,6 +213,15 @@ socket.on('chartmsg',function(data){
             var info=JSON.parse(message);
             var payload=pushbar();
             payload.series=info.series;
+            payload.xAxis.categories=info.categories;
+            socket.emit('pushData',payload);
+        }
+        if(channel.indexOf("push3d")>=0)
+        {
+            var info=JSON.parse(message);
+            var payload=push3d();
+            var serie=[{name:info.name,data:info.data}];
+            payload.series=serie;
             payload.xAxis.categories=info.categories;
             socket.emit('pushData',payload);
         }

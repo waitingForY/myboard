@@ -71,6 +71,11 @@ var pushbar={
     series: [{ name: 'Year 1800', data: [107, 31, 635, 203, 2] }, { name: 'Year 1900', data: [133, 156, 947, 408, 6] }, { name: 'Year 2008', data: [973, 914, 4054, 732, 34] }]
 }
 
+var pushcolumn3d={
+    name:"i don't know",
+    categories:['一月', '二月', '三月', '四月', '五月', '六月' ,'七月', '八月', '九月', '十月', '十一月', '十二月'],
+    data: [29.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, 95.6, 54.4]
+}
 
 client.on('ready',function  (error) {
 	if (error) {
@@ -82,6 +87,8 @@ client.on('ready',function  (error) {
 			client.publish('pusharea_test',JSON.stringify(pusharea));
 			client.publish('pushpie_test',JSON.stringify(pushpie));
                                        client.publish('pushbar_test',JSON.stringify(pushbar));
+                                       client.publish('push3d_test',JSON.stringify(pushcolumn3d));
+
 
 		},2000);
 //		setTimeout(function  () {
