@@ -11,7 +11,6 @@ var sty={
     color:'#ffffff',
     fontSize:'15'
 };
-
 var theme={
      //colors: ["#DDDF0D", "#7798BF", "#55BF3B", "#DF5353", "#aaeeee", "#ff0066", "#eeaaee", "#55BF3B", "#DF5353", "#7798BF", "#aaeeee"],
      chart: { 
@@ -113,6 +112,7 @@ function pushpie(){
     };
     var plotOptions= {
         pie: {
+            showInLegend: true,
             allowPointSelect: true,
             cursor: 'pointer',
             dataLabels: {
@@ -141,7 +141,7 @@ function pushbar(){
     return payload;
 }
 
-function push3d()
+function push3dcolumn()
 {
     var payload={};
     payload.chart=theme.chart;
@@ -152,6 +152,34 @@ function push3d()
     payload.xAxis=theme.xAxis;
     payload.yAxis=theme.yAxis;
     return payload;
+}
+
+function pushhalfpie()
+{
+    var payload={};
+    payload.chart=theme.chart;
+    payload.chart.options3d.enabled=false;
+    payload.chart.type="pie";
+    payload.title=theme.title;
+    payload.tooltip=theme.tooltip;
+    payload.plotOptions={
+            pie: {
+                showInLegend: true,
+                dataLabels: {
+                    enabled: true,
+                    distance: -50,
+                    style: {
+                        fontWeight: 'bold',
+                        color: 'white',
+                        textShadow: '0px 1px 2px black'
+                    }
+                },
+                startAngle: -90,
+                endAngle: 90,
+                center: ['50%', '75%']
+            }
+        };
+        return payload;
 }
 
 
@@ -216,13 +244,21 @@ socket.on('chartmsg',function(data){
             payload.xAxis.categories=info.categories;
             socket.emit('pushData',payload);
         }
-        if(channel.indexOf("push3d")>=0)
+        if(channel.indexOf("push3dcolumn")>=0)
         {
             var info=JSON.parse(message);
-            var payload=push3d();
+            var payload=push3dcolumn();
             var serie=[{name:info.name,data:info.data}];
             payload.series=serie;
             payload.xAxis.categories=info.categories;
+            socket.emit('pushData',payload);
+        }
+        if(channel.indexOf("pushhalfpie")>=0)
+        {
+            var info=JSON.parse(message);
+            var serie=[info];
+            var payload=pushhalfpie();
+            payload.series =serie;
             socket.emit('pushData',payload);
         }
     });
