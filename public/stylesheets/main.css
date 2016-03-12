@@ -6,9 +6,9 @@ body{
 }
 #header{
     height: 50px;
-    border: 1px solid #00B7FF;
     text-align: center;
-    line-height: 52px;
+    background-color: #444444;
+    line-height: 50px;
 }
 #logo{
     width: 100px;
